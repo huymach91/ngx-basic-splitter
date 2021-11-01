@@ -23,12 +23,17 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
 
   private handlerStartRef: any;
 
-  private start = {};
+  private start = {
+    clientX: 0,
+    clientY: 0,
+    leftWidth: 0,
+  };
   private end = {};
 
   constructor(private element: ElementRef) {
     this.handler.style.setProperty('height', '30px');
     this.handler.style.setProperty('width', '100%');
+    this.handler.style.setProperty('cursor', 'pointer');
     this.handler.style.setProperty('background-color', '#dee2e6');
   }
 
@@ -36,8 +41,8 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     const splitter = (this.element.nativeElement as HTMLDivElement).appendChild(
       this.handler
     );
-    const leftSide = splitter.previousElementSibling as HTMLDivElement;
-    const righSide = splitter.nextElementSibling as HTMLDivElement;
+    this.leftSide = splitter.previousElementSibling as HTMLDivElement;
+    this.rightSide = splitter.nextElementSibling as HTMLDivElement;
 
     this.setStyle();
     // handle start
@@ -62,5 +67,9 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     element.style.setProperty('height', '100%');
   }
 
-  private onHandlerStart() {}
+  private onHandlerStart(event: any) {
+    this.start.clientX = event.clientX;
+    this.start.clientY = event.clientY;
+    this.start.leftWidth = this.leftSide.getBoundingClientRect().width;
+  }
 }
