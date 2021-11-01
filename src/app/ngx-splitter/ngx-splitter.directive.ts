@@ -1,4 +1,10 @@
-import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  Input,
+  OnDestroy,
+} from '@angular/core';
 
 export enum DirectionEnum {
   vertical = 'vertical',
@@ -8,10 +14,12 @@ export enum DirectionEnum {
 @Directive({
   selector: '[ngx-splitter]',
 })
-export class NgxSplitterDirective implements AfterViewInit {
+export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
   @Input('direction') direction: DirectionEnum = DirectionEnum.horizontal;
 
   private handler = document.createElement('div');
+
+  private handlerStartRef: any;
 
   constructor(private element: ElementRef) {
     this.handler.style.setProperty('height', '30px');
@@ -22,6 +30,13 @@ export class NgxSplitterDirective implements AfterViewInit {
   ngAfterViewInit() {
     (this.element.nativeElement as HTMLDivElement).appendChild(this.handler);
     this.setStyle();
+    // handle init
+    this.handlerStartRef = this.onHandlerStart.bind(this);
+    this.handler.addEventListener('mousedown', this.handlerStartRef);
+  }
+
+  ngOnDestroy() {
+    this.handler.removeEventListener('mousedown', this.handlerStartRef);
   }
 
   setStyle() {
@@ -36,4 +51,6 @@ export class NgxSplitterDirective implements AfterViewInit {
     element.style.setProperty('background-color', '#f8f9fa');
     element.style.setProperty('height', '100%');
   }
+
+  private onHandlerStart() {}
 }
