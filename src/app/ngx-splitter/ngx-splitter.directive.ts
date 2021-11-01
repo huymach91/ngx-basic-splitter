@@ -30,7 +30,7 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     clientY: 0,
     leftWidth: 0,
   };
-  private end = {};
+  private isMouseDown: boolean = false;
 
   constructor(private element: ElementRef) {
     this.handler.style.setProperty('height', '30px');
@@ -59,6 +59,8 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.handler.removeEventListener('mousedown', this.handlerStartRef);
+    this.handler.removeEventListener('mousemove', this.handlerMoveRef);
+    this.handler.removeEventListener('mouseup', this.handlerEndRef);
   }
 
   setStyle() {
@@ -75,12 +77,31 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
   }
 
   private onHandlerStart(event: any) {
+    this.isMouseDown = true;
     this.start.clientX = event.clientX;
     this.start.clientY = event.clientY;
     this.start.leftWidth = this.leftSide.getBoundingClientRect().width;
   }
 
-  private onHandlerMove(event: any) {}
+  private onHandlerMove(event: any) {
+    if (!this.isMouseDown) return;
+    const parent = (this.element.nativeElement as HTMLDivElement)
+      .parentElement as HTMLDivElement;
+    const parentRect = parent.getBoundingClientRect();
 
-  private onHandlerEnd(event: any) {}
+    const dx = event.clientX - this.start.clientX;
+    const dy = event.clientY - this.start.clientY;
+    const newLeftWidth = (
+      ((this.start.leftWidth + dx) * 100) /
+      parentRect.width
+    ).toFixed(2);
+    console.log('newLeftWidth', newLeftWidth, this.isMouseDown);
+    this.leftSide.style.setProperty('width', newLeftWidth + 'px', '!important');
+  }
+
+  private onHandlerEnd(event: any) {
+    this.isMouseDown = false;
+    // this.handler.removeEventListener('mousemove', this.handlerMoveRef);
+    console.log('handlerEndRef', this.isMouseDown, this.handler);
+  }
 }
