@@ -99,16 +99,29 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
 
     const dx = event.clientX - this.start.clientX;
     const dy = event.clientY - this.start.clientY;
+
     const newLeftWidth = (
       ((this.start.leftWidth + dx) * 100) /
       parentRect.width
-    ).toFixed(2);
+    ).toFixed(0);
 
-    this.leftSide.style.setProperty('width', newLeftWidth + 'px', '!important');
+    this.leftSide.style.setProperty('width', newLeftWidth + '%', 'important');
+    this.rightSide.style.setProperty(
+      'width',
+      'calc(100% - ' + newLeftWidth + '%)',
+      'important'
+    );
   }
 
   public onHandlerEnd(event: any) {
     this.isMouseDown = false;
+
+    this.leftSide.style.removeProperty('user-select');
+    this.leftSide.style.removeProperty('pointer-events');
+
+    this.rightSide.style.removeProperty('user-select');
+    this.rightSide.style.removeProperty('pointer-events');
+
     document.removeEventListener('mousemove', this.handlerMoveRef);
     document.removeEventListener('mouseup', this.handlerEndRef);
   }
