@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Directive,
   ElementRef,
-  HostListener,
   Input,
   OnDestroy,
 } from '@angular/core';
@@ -31,13 +30,17 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     clientY: 0,
     leftWidth: 0,
   };
-  private isMouseDown: boolean = false;
+  public isMouseDown: boolean = false;
 
   constructor(private element: ElementRef) {
     this.handler.style.setProperty('height', '30px');
     this.handler.style.setProperty('width', '100%');
     this.handler.style.setProperty('cursor', 'pointer');
     this.handler.style.setProperty('background-color', '#dee2e6');
+    this.handler.style.setProperty(
+      'cursor',
+      this.direction === DirectionEnum.horizontal ? 'col-resize' : 'row-resize'
+    );
   }
 
   ngAfterViewInit() {
@@ -46,32 +49,29 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     this.leftSide = splitter.previousElementSibling as HTMLDivElement;
     this.rightSide = splitter.nextElementSibling as HTMLDivElement;
 
+    this.leftSide.style.userSelect = 'none';
+    this.leftSide.style.pointerEvents = 'none';
+
+    this.rightSide.style.userSelect = 'none';
+    this.rightSide.style.pointerEvents = 'none';
+
     this.setStyle();
     // handler: start
     this.handlerStartRef = this.onHandlerStart.bind(this);
+    this.handlerMoveRef = this.onHandlerMove.bind(this);
+    this.handlerEndRef = this.onHandlerEnd.bind(this);
+
     this.handler.addEventListener('mousedown', this.handlerStartRef);
   }
 
   ngOnDestroy() {
     this.handler.removeEventListener('mousedown', this.handlerStartRef);
-  }
-
-  @HostListener('document:mousemove', ['$event'])
-  onMouseMove(event: any) {
-    this.onHandlerMove(event);
-  }
-
-  @HostListener('document:mouseup', ['$event'])
-  onMouseUp(event: any) {
-    this.onHandlerEnd();
+    document.removeEventListener('mousemove', this.handlerMoveRef);
+    document.removeEventListener('mouseup', this.handlerEndRef);
   }
 
   setStyle() {
     const element = this.element.nativeElement as HTMLDivElement;
-    element.style.setProperty(
-      'cursor',
-      this.direction === DirectionEnum.horizontal ? 'col-resize' : 'row-resize'
-    );
     element.style.setProperty('display', 'flex');
     element.style.setProperty('align-items', 'center');
     element.style.setProperty('width', '3px');
@@ -79,16 +79,19 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     element.style.setProperty('height', '100%');
   }
 
-  private onHandlerStart(event: any) {
+  public onHandlerStart(event: any) {
     this.isMouseDown = true;
     this.start.clientX = event.clientX;
     this.start.clientY = event.clientY;
     this.start.leftWidth = this.leftSide.getBoundingClientRect().width;
+    // handler: move
+    document.addEventListener('mousemove', this.handlerMoveRef);
+    // handler: end
+    document.addEventListener('mouseup', this.handlerEndRef);
   }
 
-  private onHandlerMove(event: any) {
+  public onHandlerMove(event: any) {
     if (!this.isMouseDown) return;
-    console.log('move');
     const parent = (this.element.nativeElement as HTMLDivElement)
       .parentElement as HTMLDivElement;
     const parentRect = parent.getBoundingClientRect();
@@ -99,11 +102,14 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
       ((this.start.leftWidth + dx) * 100) /
       parentRect.width
     ).toFixed(2);
-
+    console.log('newLeftWidth', newLeftWidth, this.isMouseDown);
     this.leftSide.style.setProperty('width', newLeftWidth + 'px', '!important');
   }
 
-  private onHandlerEnd() {
+  public onHandlerEnd(event: any) {
     this.isMouseDown = false;
+    console.log('mouse up', this.isMouseDown);
+    document.removeEventListener('mousemove', this.handlerMoveRef);
+    document.removeEventListener('mouseup', this.handlerEndRef);
   }
 }
