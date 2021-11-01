@@ -23,6 +23,7 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
 
   private handlerStartRef: any;
   private handlerMoveRef: any;
+  private handlerEndRef: any;
 
   private start = {
     clientX: 0,
@@ -52,6 +53,8 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     this.handlerMoveRef = this.onHandlerMove.bind(this);
     this.handler.addEventListener('mousemove', this.handlerMoveRef);
     // handler: end
+    this.handlerEndRef = this.onHandlerEnd.bind(this);
+    this.handler.addEventListener('mouseup', this.onHandlerEnd);
   }
 
   ngOnDestroy() {
@@ -78,4 +81,6 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
   }
 
   private onHandlerMove(event: any) {}
+
+  private onHandlerEnd(event: any) {}
 }
