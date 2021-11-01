@@ -11,10 +11,16 @@ export enum DirectionEnum {
 export class NgxSplitterDirective implements AfterViewInit {
   @Input('direction') direction: DirectionEnum = DirectionEnum.horizontal;
 
-  constructor(private element: ElementRef) {}
+  private handler = document.createElement('div');
+
+  constructor(private element: ElementRef) {
+    this.handler.style.setProperty('height', '30px');
+    this.handler.style.setProperty('width', '100%');
+    this.handler.style.setProperty('background-color', '#dee2e6');
+  }
 
   ngAfterViewInit() {
-    console.log('dasdasd');
+    (this.element.nativeElement as HTMLDivElement).appendChild(this.handler);
     this.setStyle();
   }
 
@@ -24,6 +30,8 @@ export class NgxSplitterDirective implements AfterViewInit {
       'cursor',
       this.direction === DirectionEnum.horizontal ? 'col-resize' : 'row-resize'
     );
+    element.style.setProperty('display', 'flex');
+    element.style.setProperty('align-items', 'center');
     element.style.setProperty('width', '3px');
     element.style.setProperty('background-color', '#f8f9fa');
     element.style.setProperty('height', '100%');
