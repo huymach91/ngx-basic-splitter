@@ -46,6 +46,7 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     const splitter = this.element.nativeElement as HTMLDivElement;
     splitter.appendChild(this.handler);
+
     this.leftSide = splitter.previousElementSibling as HTMLDivElement;
     this.rightSide = splitter.nextElementSibling as HTMLDivElement;
 
@@ -102,7 +103,7 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
       ((this.start.leftWidth + dx) * 100) /
       parentRect.width
     ).toFixed(2);
-    console.log('newLeftWidth', newLeftWidth, this.isMouseDown);
+
     this.leftSide.style.setProperty('width', newLeftWidth + 'px', '!important');
   }
 
