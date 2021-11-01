@@ -18,6 +18,8 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
   @Input('direction') direction: DirectionEnum = DirectionEnum.horizontal;
 
   private handler = document.createElement('div');
+  private leftSide: any;
+  private rightSide: any;
 
   private handlerStartRef: any;
 
@@ -31,7 +33,12 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    (this.element.nativeElement as HTMLDivElement).appendChild(this.handler);
+    const splitter = (this.element.nativeElement as HTMLDivElement).appendChild(
+      this.handler
+    );
+    const leftSide = splitter.previousElementSibling as HTMLDivElement;
+    const righSide = splitter.nextElementSibling as HTMLDivElement;
+
     this.setStyle();
     // handle start
     this.handlerStartRef = this.onHandlerStart.bind(this);
