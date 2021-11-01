@@ -22,6 +22,7 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
   private rightSide: any;
 
   private handlerStartRef: any;
+  private handlerMoveRef: any;
 
   private start = {
     clientX: 0,
@@ -38,16 +39,19 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    const splitter = (this.element.nativeElement as HTMLDivElement).appendChild(
-      this.handler
-    );
+    const splitter = this.element.nativeElement as HTMLDivElement;
+    splitter.appendChild(this.handler);
     this.leftSide = splitter.previousElementSibling as HTMLDivElement;
     this.rightSide = splitter.nextElementSibling as HTMLDivElement;
 
     this.setStyle();
-    // handle start
+    // handler: start
     this.handlerStartRef = this.onHandlerStart.bind(this);
     this.handler.addEventListener('mousedown', this.handlerStartRef);
+    // handler: move
+    this.handlerMoveRef = this.onHandlerMove.bind(this);
+    this.handler.addEventListener('mousemove', this.handlerMoveRef);
+    // handler: end
   }
 
   ngOnDestroy() {
@@ -72,4 +76,6 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     this.start.clientY = event.clientY;
     this.start.leftWidth = this.leftSide.getBoundingClientRect().width;
   }
+
+  private onHandlerMove(event: any) {}
 }
