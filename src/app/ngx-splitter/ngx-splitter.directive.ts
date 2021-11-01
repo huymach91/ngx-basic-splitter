@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Directive,
   ElementRef,
+  HostListener,
   Input,
   OnDestroy,
 } from '@angular/core';
@@ -49,18 +50,20 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     // handler: start
     this.handlerStartRef = this.onHandlerStart.bind(this);
     this.handler.addEventListener('mousedown', this.handlerStartRef);
-    // handler: move
-    this.handlerMoveRef = this.onHandlerMove.bind(this);
-    this.handler.addEventListener('mousemove', this.handlerMoveRef);
-    // handler: end
-    this.handlerEndRef = this.onHandlerEnd.bind(this);
-    this.handler.addEventListener('mouseup', this.onHandlerEnd);
   }
 
   ngOnDestroy() {
     this.handler.removeEventListener('mousedown', this.handlerStartRef);
-    this.handler.removeEventListener('mousemove', this.handlerMoveRef);
-    this.handler.removeEventListener('mouseup', this.handlerEndRef);
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: any) {
+    this.onHandlerMove(event);
+  }
+
+  @HostListener('document:mouseup', ['$event'])
+  onMouseUp(event: any) {
+    this.onHandlerEnd();
   }
 
   setStyle() {
@@ -85,6 +88,7 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
 
   private onHandlerMove(event: any) {
     if (!this.isMouseDown) return;
+    console.log('move');
     const parent = (this.element.nativeElement as HTMLDivElement)
       .parentElement as HTMLDivElement;
     const parentRect = parent.getBoundingClientRect();
@@ -95,13 +99,11 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
       ((this.start.leftWidth + dx) * 100) /
       parentRect.width
     ).toFixed(2);
-    console.log('newLeftWidth', newLeftWidth, this.isMouseDown);
+
     this.leftSide.style.setProperty('width', newLeftWidth + 'px', '!important');
   }
 
-  private onHandlerEnd(event: any) {
+  private onHandlerEnd() {
     this.isMouseDown = false;
-    // this.handler.removeEventListener('mousemove', this.handlerMoveRef);
-    console.log('handlerEndRef', this.isMouseDown, this.handler);
   }
 }
