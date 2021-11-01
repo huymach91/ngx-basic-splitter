@@ -1,3 +1,19 @@
-p {
-  font-family: Lato;
+.row {
+  display: flex;
+  flex-direction: row;
+  height: 250px;
+}
+
+.row .left,
+.row .right {
+  border: 1px solid #ccc;
+  height: 100%;
+}
+
+.row .left {
+  width: 30%;
+}
+
+.row .right {
+  width: 70%;
 }
