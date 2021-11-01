@@ -109,7 +109,6 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
 
   public onHandlerEnd(event: any) {
     this.isMouseDown = false;
-    console.log('mouse up', this.isMouseDown);
     document.removeEventListener('mousemove', this.handlerMoveRef);
     document.removeEventListener('mouseup', this.handlerEndRef);
   }
