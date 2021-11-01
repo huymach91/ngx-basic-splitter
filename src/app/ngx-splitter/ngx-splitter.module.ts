@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { NgxSplitterComponent } from './ngx-splitter.component';
+import { NgxSplitterDirective } from './ngx-splitter.directive';
 
 @NgModule({
   imports: [BrowserModule, FormsModule],
-  declarations: [NgxSplitterComponent],
+  declarations: [NgxSplitterDirective],
   bootstrap: [],
-  exports: [NgxSplitterComponent],
+  exports: [NgxSplitterDirective],
 })
 export class NgxSplitterModule {}
