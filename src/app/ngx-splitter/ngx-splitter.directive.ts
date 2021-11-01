@@ -21,6 +21,9 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
 
   private handlerStartRef: any;
 
+  private start = {};
+  private end = {};
+
   constructor(private element: ElementRef) {
     this.handler.style.setProperty('height', '30px');
     this.handler.style.setProperty('width', '100%');
@@ -30,7 +33,7 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     (this.element.nativeElement as HTMLDivElement).appendChild(this.handler);
     this.setStyle();
-    // handle init
+    // handle start
     this.handlerStartRef = this.onHandlerStart.bind(this);
     this.handler.addEventListener('mousedown', this.handlerStartRef);
   }
