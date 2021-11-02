@@ -100,6 +100,8 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     const dx = event.clientX - this.start.clientX;
     const dy = event.clientY - this.start.clientY;
 
+    console.log(event.clientX, event.clientY, event.pageX, event.pageY);
+
     const newLeftWidth = (
       ((this.start.leftWidth + dx) * 100) /
       parentRect.width
