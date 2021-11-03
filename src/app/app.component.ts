@@ -7,5 +7,5 @@ import { DirectionEnum } from './ngx-splitter/ngx-splitter.directive';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  directionEnum: DirectionEnum;
+  directionEnum = DirectionEnum;
 }
