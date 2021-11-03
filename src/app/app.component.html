@@ -2,32 +2,40 @@
 <br />
 <h3>Horizontal</h3>
 <div class="horizontal">
-  <div class="left">left</div>
+  <div class="left"><div class="content">panel 1</div></div>
   <div ngx-splitter></div>
-  <div class="right">right</div>
+  <div class="right"><div class="content">panel 2</div></div>
 </div>
 
 <h3>Vertical</h3>
 <div class="vertical">
-  <div class="left">left</div>
+  <div class="left"><div class="content">panel 1</div></div>
   <div ngx-splitter [direction]="directionEnum.vertical"></div>
-  <div class="right">right</div>
+  <div class="right"><div class="content">panel 2</div></div>
 </div>
 
 <h3>Nested</h3>
 <div class="nested">
   <div class="horizontal">
-    <div class="left">panel 1</div>
+    <div class="left">
+      <div class="content">panel 1</div>
+    </div>
     <div ngx-splitter></div>
     <div class="right">
       <div class="ver-2">
-        <div class="left">panel 2</div>
+        <div class="left">
+          <div class="content">panel 2</div>
+        </div>
         <div ngx-splitter [direction]="directionEnum.vertical"></div>
         <div class="right">
           <div class="hor-2">
-            <div class="left">panel 3</div>
+            <div class="left">
+              <div class="content">panel 3</div>
+            </div>
             <div ngx-splitter></div>
-            <div class="right">panel 4</div>
+            <div class="right">
+              <div class="content">panel 4</div>
+            </div>
           </div>
         </div>
       </div>
