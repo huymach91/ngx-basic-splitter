@@ -100,19 +100,42 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     const dx = event.clientX - this.start.clientX;
     const dy = event.clientY - this.start.clientY;
 
-    console.log(event.clientX, event.clientY, event.pageX, event.pageY);
+    switch (this.direction) {
+      case DirectionEnum.horizontal:
+        const newLeftWidth = (
+          ((this.start.leftWidth + dx) * 100) /
+          parentRect.width
+        ).toFixed(0);
 
-    const newLeftWidth = (
-      ((this.start.leftWidth + dx) * 100) /
-      parentRect.width
-    ).toFixed(0);
+        this.leftSide.style.setProperty(
+          'width',
+          newLeftWidth + '%',
+          'important'
+        );
+        this.rightSide.style.setProperty(
+          'width',
+          'calc(100% - ' + newLeftWidth + '%)',
+          'important'
+        );
+        break;
+      case DirectionEnum.vertical:
+        const newLeftHeight = (
+          ((this.start.leftWidth + dy) * 100) /
+          parentRect.width
+        ).toFixed(0);
 
-    this.leftSide.style.setProperty('width', newLeftWidth + '%', 'important');
-    this.rightSide.style.setProperty(
-      'width',
-      'calc(100% - ' + newLeftWidth + '%)',
-      'important'
-    );
+        this.leftSide.style.setProperty(
+          'height',
+          newLeftHeight + '%',
+          'important'
+        );
+        this.rightSide.style.setProperty(
+          'height',
+          'calc(100% - ' + newLeftHeight + '%)',
+          'important'
+        );
+        break;
+    }
   }
 
   public onHandlerEnd(event: any) {
