@@ -1,20 +1,40 @@
-.row {
+.horizontal {
   display: flex;
   flex-direction: row;
   height: 250px;
   width: 100%;
 }
 
-.row .left,
-.row .right {
+.horizontal .left,
+.horizontal .right {
   border: 1px solid #ccc;
   height: 100%;
 }
 
-.row .left {
+.horizontal .left {
   width: 30%;
 }
 
-.row .right {
+.horizontal .right {
   width: 70%;
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 100%;
+}
+
+.vertical .left,
+.vertical .right {
+  border: 1px solid #ccc;
+}
+
+.vertical .left {
+  height: 50%;
+}
+
+.vertical .right {
+  height: 50%;
 }

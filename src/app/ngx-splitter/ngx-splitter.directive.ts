@@ -75,9 +75,18 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     const element = this.element.nativeElement as HTMLDivElement;
     element.style.setProperty('display', 'flex');
     element.style.setProperty('align-items', 'center');
-    element.style.setProperty('width', '3px');
     element.style.setProperty('background-color', '#f8f9fa');
-    element.style.setProperty('height', '100%');
+
+    switch (this.direction) {
+      case DirectionEnum.horizontal:
+        element.style.setProperty('width', '3px');
+        element.style.setProperty('height', '100%');
+        break;
+      case DirectionEnum.vertical:
+        element.style.setProperty('height', '3px');
+        element.style.setProperty('width', '100%');
+        break;
+    }
   }
 
   public onHandlerStart(event: any) {
