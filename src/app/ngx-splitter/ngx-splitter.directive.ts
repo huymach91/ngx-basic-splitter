@@ -19,7 +19,7 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
   @Input('direction') direction: DirectionEnum = DirectionEnum.horizontal;
 
   private handler = document.createElement('div');
-  private handleerSize: number = 3; // 3px
+  private handleerSize: number = 5; // 3px
   private leftSide: any;
   private rightSide: any;
 
