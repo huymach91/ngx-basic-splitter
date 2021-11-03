@@ -19,6 +19,7 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
   @Input('direction') direction: DirectionEnum = DirectionEnum.horizontal;
 
   private handler = document.createElement('div');
+  private handleerSize: number = 3; // 3px
   private leftSide: any;
   private rightSide: any;
 
@@ -53,12 +54,6 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
     this.leftSide = splitter.previousElementSibling as HTMLDivElement;
     this.rightSide = splitter.nextElementSibling as HTMLDivElement;
 
-    this.leftSide.style.userSelect = 'none';
-    this.leftSide.style.pointerEvents = 'none';
-
-    this.rightSide.style.userSelect = 'none';
-    this.rightSide.style.pointerEvents = 'none';
-
     this.setStyle();
     // handler: start
     this.handlerStartRef = this.onHandlerStart.bind(this);
@@ -82,13 +77,13 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
 
     switch (this.direction) {
       case DirectionEnum.horizontal:
-        element.style.setProperty('width', '3px');
+        element.style.setProperty('width', this.handleerSize + 'px');
         element.style.setProperty('height', '100%');
         this.handler.style.setProperty('height', '30px');
         this.handler.style.setProperty('width', '100%');
         break;
       case DirectionEnum.vertical:
-        element.style.setProperty('height', '3px');
+        element.style.setProperty('height', this.handleerSize + 'px');
         element.style.setProperty('width', '100%');
         element.style.setProperty('justify-content', 'center');
 
@@ -115,6 +110,12 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
     const parent = (this.element.nativeElement as HTMLDivElement)
       .parentElement as HTMLDivElement;
     const parentRect = parent.getBoundingClientRect();
+
+    this.leftSide.style.userSelect = 'none';
+    this.leftSide.style.pointerEvents = 'none';
+
+    this.rightSide.style.userSelect = 'none';
+    this.rightSide.style.pointerEvents = 'none';
 
     const dx = event.clientX - this.start.clientX;
     const dy = event.clientY - this.start.clientY;
@@ -145,12 +146,23 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
 
         this.leftSide.style.setProperty(
           'height',
-          newLeftHeight + '%',
+          'calc(' +
+            newLeftHeight +
+            '%' +
+            ' - ' +
+            this.handleerSize +
+            'px' +
+            ')',
           'important'
         );
         this.rightSide.style.setProperty(
           'height',
-          'calc(100% - ' + newLeftHeight + '%)',
+          'calc(100% - ' +
+            newLeftHeight +
+            '% - ' +
+            this.handleerSize +
+            'px' +
+            ')',
           'important'
         );
         break;
