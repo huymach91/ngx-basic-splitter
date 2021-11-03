@@ -4,6 +4,7 @@ import {
   ElementRef,
   Input,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 
 export enum DirectionEnum {
@@ -14,7 +15,7 @@ export enum DirectionEnum {
 @Directive({
   selector: '[ngx-splitter]',
 })
-export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
+export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
   @Input('direction') direction: DirectionEnum = DirectionEnum.horizontal;
 
   private handler = document.createElement('div');
@@ -29,14 +30,16 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     clientX: 0,
     clientY: 0,
     leftWidth: 0,
+    leftHeight: 0,
   };
   public isMouseDown: boolean = false;
 
   constructor(private element: ElementRef) {
-    this.handler.style.setProperty('height', '30px');
-    this.handler.style.setProperty('width', '100%');
     this.handler.style.setProperty('cursor', 'pointer');
     this.handler.style.setProperty('background-color', '#dee2e6');
+  }
+
+  ngOnInit() {
     this.handler.style.setProperty(
       'cursor',
       this.direction === DirectionEnum.horizontal ? 'col-resize' : 'row-resize'
@@ -81,10 +84,16 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
       case DirectionEnum.horizontal:
         element.style.setProperty('width', '3px');
         element.style.setProperty('height', '100%');
+        this.handler.style.setProperty('height', '30px');
+        this.handler.style.setProperty('width', '100%');
         break;
       case DirectionEnum.vertical:
         element.style.setProperty('height', '3px');
         element.style.setProperty('width', '100%');
+        element.style.setProperty('justify-content', 'center');
+
+        this.handler.style.setProperty('width', '30px');
+        this.handler.style.setProperty('height', '100%');
         break;
     }
   }
@@ -94,6 +103,7 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
     this.start.clientX = event.clientX;
     this.start.clientY = event.clientY;
     this.start.leftWidth = this.leftSide.getBoundingClientRect().width;
+    this.start.leftHeight = this.leftSide.getBoundingClientRect().height;
     // handler: move
     document.addEventListener('mousemove', this.handlerMoveRef);
     // handler: end
@@ -129,8 +139,8 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy {
         break;
       case DirectionEnum.vertical:
         const newLeftHeight = (
-          ((this.start.leftWidth + dy) * 100) /
-          parentRect.width
+          ((this.start.leftHeight + dy) * 100) /
+          parentRect.height
         ).toFixed(0);
 
         this.leftSide.style.setProperty(
