@@ -2,7 +2,7 @@
 # Ngx Splitter
 
 angular 12.1.x. 
-[Buy Me a Coffee](https://stackblitz.com/edit/ngx-splitter)
+[Buy Me a Coffee](https://www.buymeacoffee.com/huymax)
 
 
 ## Demo
