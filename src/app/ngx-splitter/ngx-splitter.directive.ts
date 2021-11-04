@@ -17,6 +17,9 @@ export enum DirectionEnum {
 })
 export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
   @Input('direction') direction: DirectionEnum = DirectionEnum.horizontal;
+  // left of the splitter element
+  @Input('horizontalLeftWidth') horizontalLeftWidth: number = 5;
+  @Input('verticalLeftHeight') verticalLeftHeight: number = 5;
 
   private parentElement: any;
   private handler = document.createElement('div');
@@ -92,8 +95,14 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
         element.style.setProperty('width', this.handleerSize + 'px');
         element.style.setProperty('height', '100%');
         // left and right side's default width
-        this.leftSide.style.setProperty('width', '30%');
-        this.rightSide.style.setProperty('width', '70%');
+        this.leftSide.style.setProperty(
+          'width',
+          this.horizontalLeftWidth + '%'
+        );
+        this.rightSide.style.setProperty(
+          'width',
+          100 - this.horizontalLeftWidth + '%'
+        );
         // handler
         this.handler.style.setProperty('height', '30px');
         this.handler.style.setProperty('width', '100%');
@@ -106,8 +115,14 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
         element.style.setProperty('width', '100%');
         element.style.setProperty('justify-content', 'center');
         // left side's default width
-        this.leftSide.style.setProperty('height', '30%');
-        this.rightSide.style.setProperty('height', '70%');
+        this.leftSide.style.setProperty(
+          'height',
+          this.verticalLeftHeight + '%'
+        );
+        this.rightSide.style.setProperty(
+          'height',
+          100 - this.verticalLeftHeight + '%'
+        );
         // handler
         this.handler.style.setProperty('width', '30px');
         this.handler.style.setProperty('height', '100%');

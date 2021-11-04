@@ -3,14 +3,18 @@
 <h3>Horizontal</h3>
 <div class="horizontal">
   <div class="left"><div class="content">panel 1</div></div>
-  <div ngx-splitter></div>
+  <div ngx-splitter [horizontalLeftWidth]="30"></div>
   <div class="right"><div class="content">panel 2</div></div>
 </div>
 
 <h3>Vertical</h3>
 <div class="vertical">
   <div class="left"><div class="content">panel 1</div></div>
-  <div ngx-splitter [direction]="directionEnum.vertical"></div>
+  <div
+    ngx-splitter
+    [direction]="directionEnum.vertical"
+    [verticalLeftHeight]="50"
+  ></div>
   <div class="right"><div class="content">panel 2</div></div>
 </div>
 
@@ -20,19 +24,23 @@
     <div class="left">
       <div class="content">panel 1</div>
     </div>
-    <div ngx-splitter></div>
+    <div ngx-splitter [horizontalLeftWidth]="30"></div>
     <div class="right">
       <div class="ver-2">
         <div class="left">
           <div class="content">panel 2</div>
         </div>
-        <div ngx-splitter [direction]="directionEnum.vertical"></div>
+        <div
+          ngx-splitter
+          [direction]="directionEnum.vertical"
+          [verticalLeftHeight]="20"
+        ></div>
         <div class="right">
           <div class="hor-2">
             <div class="left">
               <div class="content">panel 3</div>
             </div>
-            <div ngx-splitter></div>
+            <div ngx-splitter [horizontalLeftWidth]="30"></div>
             <div class="right">
               <div class="content">panel 4</div>
             </div>
