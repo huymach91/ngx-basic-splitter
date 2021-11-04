@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { NgxSplitterModule } from './ngx-splitter/ngx-splitter.module';
+import { NgxBasicSplitterModule } from './ngx-splitter/ngx-splitter.module';
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, NgxSplitterModule],
+  imports: [BrowserModule, FormsModule, NgxBasicSplitterModule],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
 })

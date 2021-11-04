@@ -13,9 +13,11 @@ export enum DirectionEnum {
 }
 
 @Directive({
-  selector: '[ngx-splitter]',
+  selector: '[ngx-basic-splitter]',
 })
-export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
+export class NgxBasicSplitterDirective
+  implements AfterViewInit, OnDestroy, OnInit
+{
   @Input('direction') direction: DirectionEnum = DirectionEnum.horizontal;
   // left of the splitter element
   @Input('horizontalLeftWidth') horizontalLeftWidth: number = 20;
