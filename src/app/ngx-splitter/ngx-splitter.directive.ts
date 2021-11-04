@@ -91,7 +91,7 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
         // splitter
         element.style.setProperty('width', this.handleerSize + 'px');
         element.style.setProperty('height', '100%');
-        // left side's default width
+        // left and right side's default width
         this.leftSide.style.setProperty('width', '30%');
         this.rightSide.style.setProperty('width', '70%');
         // handler
@@ -99,10 +99,15 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
         this.handler.style.setProperty('width', '100%');
         break;
       case DirectionEnum.vertical:
+        // parent element
+        this.parentElement.style.setProperty('flex-direction', 'column');
         // splitter
         element.style.setProperty('height', this.handleerSize + 'px');
         element.style.setProperty('width', '100%');
         element.style.setProperty('justify-content', 'center');
+        // left side's default width
+        this.leftSide.style.setProperty('height', '30%');
+        this.rightSide.style.setProperty('height', '70%');
         // handler
         this.handler.style.setProperty('width', '30px');
         this.handler.style.setProperty('height', '100%');
