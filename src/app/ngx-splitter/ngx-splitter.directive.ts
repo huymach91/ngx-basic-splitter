@@ -86,7 +86,12 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
     this.parentElement.style.setProperty('display', 'flex');
 
     this.leftSide.style.setProperty('border', '1px solid #ccc');
+    this.leftSide.style.setProperty('min-width', '30px');
+    this.leftSide.style.setProperty('min-height', '30px');
+
     this.rightSide.style.setProperty('border', '1px solid #ccc');
+    this.rightSide.style.setProperty('min-width', '30px');
+    this.rightSide.style.setProperty('min-height', '30px');
 
     switch (this.direction) {
       case DirectionEnum.horizontal:
