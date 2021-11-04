@@ -18,6 +18,7 @@ export enum DirectionEnum {
 export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
   @Input('direction') direction: DirectionEnum = DirectionEnum.horizontal;
 
+  private parentElement: any;
   private handler = document.createElement('div');
   private handleerSize: number = 5; // 3px
   private leftSide: any;
@@ -51,6 +52,9 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
     const splitter = this.element.nativeElement as HTMLDivElement;
     splitter.appendChild(this.handler);
 
+    this.parentElement = splitter.parentElement;
+    this.parentElement.style.setProperty('width', '100%');
+
     this.leftSide = splitter.previousElementSibling as HTMLDivElement;
     this.rightSide = splitter.nextElementSibling as HTMLDivElement;
 
@@ -75,18 +79,31 @@ export class NgxSplitterDirective implements AfterViewInit, OnDestroy, OnInit {
     element.style.setProperty('align-items', 'center');
     element.style.setProperty('background-color', '#f8f9fa');
 
+    this.parentElement.style.setProperty('display', 'flex');
+
+    this.leftSide.style.setProperty('border', '1px solid #ccc');
+    this.rightSide.style.setProperty('border', '1px solid #ccc');
+
     switch (this.direction) {
       case DirectionEnum.horizontal:
+        // parent element
+        this.parentElement.style.setProperty('flex-direction', 'row');
+        // splitter
         element.style.setProperty('width', this.handleerSize + 'px');
         element.style.setProperty('height', '100%');
+        // left side's default width
+        this.leftSide.style.setProperty('width', '30%');
+        this.rightSide.style.setProperty('width', '70%');
+        // handler
         this.handler.style.setProperty('height', '30px');
         this.handler.style.setProperty('width', '100%');
         break;
       case DirectionEnum.vertical:
+        // splitter
         element.style.setProperty('height', this.handleerSize + 'px');
         element.style.setProperty('width', '100%');
         element.style.setProperty('justify-content', 'center');
-
+        // handler
         this.handler.style.setProperty('width', '30px');
         this.handler.style.setProperty('height', '100%');
         break;
