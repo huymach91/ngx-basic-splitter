@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { NgxBasicSplitterDirective } from './ngx-splitter.directive';
+import { NgxBasicSplitterDirective } from './ngx-basic-splitter.directive';
 
 @NgModule({
   imports: [BrowserModule, FormsModule],
