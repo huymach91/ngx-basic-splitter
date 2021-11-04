@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "author": "huy mach <huy.mach.webdev@gmail.com>",
+  "keywords": ["ngx spitter"],
   "repository": {
     "type": "git",
     "url": "https://github.com/huymach91/ngx-splitter.git"
