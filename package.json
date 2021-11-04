@@ -2,6 +2,10 @@
   "name": "ngx-splitter",
   "version": "1.0.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/huymach91/ngx-splitter.git"
+  },
   "dependencies": {
     "@angular/animations": "^12.2.5",
     "@angular/common": "^12.2.5",
