@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DirectionEnum } from './ngx-splitter/ngx-splitter.directive';
+import { DirectionEnum } from './ngx-basic-splitter/ngx-basic-splitter.directive';
 
 @Component({
   selector: 'my-app',
