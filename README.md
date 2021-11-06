@@ -5,7 +5,7 @@ angular 12.1.x.
 
 ## Demo
 
-[StackBlitz ⚡️](https://stackblitz.com/edit/ngx-splitter)
+[StackBlitz ⚡️](https://stackblitz.com/edit/ngx-basic-splitter)
 
 ## Installation
 
